@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.authorizeRequests().antMatchers("/test*").hasAnyRole("ADMIN","USER");
 		
-		http.authorizeRequests().anyRequest().authenticated();
+		//http.authorizeRequests().anyRequest().authenticated();
 		
 		http.formLogin().defaultSuccessUrl("/ui/index.html")
 			.and().logout().deleteCookies("JSESSIONID");
