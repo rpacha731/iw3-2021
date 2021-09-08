@@ -1,5 +1,6 @@
 package ar.edu.iua.iw3.modelo.persistencia;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,5 +19,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 	List<Producto> findByPrecioBetween(double precio1, double precio2);
 
 	List<Producto> findByPrecioOrderByDescripcion(double precio);
+	
+	List<Producto> findAllByFechaVencimientoIsNotNull();
+	
+	List<Producto> findAllByFechaVencimientoAfter(Date fechaVenci);
+	
+	List<Producto> findFirst2ByFechaVencimientoIsNotNullOrderByFechaVencimientoAsc();
 	
 }

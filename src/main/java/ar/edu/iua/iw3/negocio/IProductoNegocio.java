@@ -1,5 +1,6 @@
 package ar.edu.iua.iw3.negocio;
 
+import java.sql.Date;
 import java.util.List;
 
 import ar.edu.iua.iw3.modelo.Producto;
@@ -21,6 +22,12 @@ public interface IProductoNegocio {
 	public List<Producto> listadoPorPrecioBetween(double precio1, double precio2) throws NegocioException, NoEncontradoException;
 	
 	public List<Producto> listadoPorPrecioOrderByDescripcion(double precio) throws NegocioException, NoEncontradoException;
+	
+	public List<Producto> listadoPorFechaVencimientoNoNull() throws NegocioException, NoEncontradoException;
+	
+	public List<Producto> listadoDespuesFechaVencimiento(Date fechaVenci) throws NegocioException, NoEncontradoException;
+	
+	public List<Producto> listadoPrimerosDosPorVencer() throws NegocioException, NoEncontradoException;
 
 	public Producto agregar(Producto producto) throws NegocioException, EncontradoException, DuplicadoException;
 

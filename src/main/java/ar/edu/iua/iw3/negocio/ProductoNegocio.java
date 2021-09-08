@@ -1,5 +1,6 @@
 package ar.edu.iua.iw3.negocio;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -160,6 +161,58 @@ public class ProductoNegocio implements IProductoNegocio {
 		
 		if (aux.isEmpty()) {
 			throw new NoEncontradoException("No hay productos con el precio = " + precio);
+		}
+		return aux;
+	}
+
+	@Override
+	public List<Producto> listadoPorFechaVencimientoNoNull() throws NegocioException, NoEncontradoException {
+		List<Producto> aux = null;
+		try {
+			aux = productoDAO.findAllByFechaVencimientoIsNotNull();
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new NegocioException(e);
+		}
+		
+		if (aux.isEmpty()) {
+			throw new NoEncontradoException("No hay productos con fecha de vencimiento");
+		}
+		return aux;
+	}
+
+	@Override
+	public List<Producto> listadoDespuesFechaVencimiento(Date fechaVenci)
+			throws NegocioException, NoEncontradoException {
+		List<Producto> aux = null;
+		try {
+			aux = productoDAO.findAllByFechaVencimientoAfter(fechaVenci);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new NegocioException(e);
+		}
+		
+		if (aux.isEmpty()) {
+			throw new NoEncontradoException("No hay productos con fecha de vencimiento despues de " + fechaVenci.toString());
+		}
+		return aux;
+	}
+
+	@Override
+	public List<Producto> listadoPrimerosDosPorVencer() throws NegocioException, NoEncontradoException {
+		List<Producto> aux = null;
+		try {
+			aux = productoDAO.findFirst2ByFechaVencimientoIsNotNullOrderByFechaVencimientoAsc();
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new NegocioException(e);
+		}
+		
+		if (aux.isEmpty()) {
+			throw new NoEncontradoException("No hay productos con fecha de vencimiento");
 		}
 		return aux;
 	}

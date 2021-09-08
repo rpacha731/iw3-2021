@@ -1,5 +1,6 @@
 package ar.edu.iua.iw3.web;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -106,7 +107,50 @@ public class ProductosRestController {
 			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping(value="/productos/fechaVencimientoNoNull")
+	public ResponseEntity<List<Producto>> listadoPorFechaVencimientoNoNull() {
+		try {
+			return new ResponseEntity<List<Producto>>(productoNegocio.listadoPorFechaVencimientoNoNull(), HttpStatus.OK);
+		} catch (NoEncontradoException ex) {
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("message", ex.getMessage());
+			return new ResponseEntity<List<Producto>>(responseHeaders, HttpStatus.NOT_FOUND);
+			
+		} catch (NegocioException e) {
+			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
+	
+	@GetMapping(value="/productos/fechaVencimientoDespues")
+	public ResponseEntity<List<Producto>> listadoDespuesFechaVencimiento(@RequestParam("fechaVenci") Date fechaVenci) {
+		try {
+			return new ResponseEntity<List<Producto>>(productoNegocio.listadoDespuesFechaVencimiento(fechaVenci), HttpStatus.OK);
+		} catch (NoEncontradoException ex) {
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("message", ex.getMessage());
+			return new ResponseEntity<List<Producto>>(responseHeaders, HttpStatus.NOT_FOUND);
+			
+		} catch (NegocioException e) {
+			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(value="/productos/dosPorVencer")
+	public ResponseEntity<List<Producto>> listadoDosPorVencer() {
+		try {
+			return new ResponseEntity<List<Producto>>(productoNegocio.listadoPrimerosDosPorVencer(), HttpStatus.OK);
+		} catch (NoEncontradoException ex) {
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("message", ex.getMessage());
+			return new ResponseEntity<List<Producto>>(responseHeaders, HttpStatus.NOT_FOUND);
+			
+		} catch (NegocioException e) {
+			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	//curl -X POST  http://localhost:8080/productos -H "Content-Type: application/json" -d '{"id":2,"descripcion":"Leche","enStock":false,"precio":104.7,"rubro":{"id":1,"rubro":"Alimentos"},"descripcionExtendida":"Se trata de leche larga vida"}'
 	
 	// 1° --> org.springframework.dao.DataIntegrityViolationException
