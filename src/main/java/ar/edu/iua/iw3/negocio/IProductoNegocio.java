@@ -20,7 +20,7 @@ public interface IProductoNegocio {
 	
 	public List<Producto> listadoPorPrecioBetween(double precio1, double precio2) throws NegocioException, NoEncontradoException;
 	
-	public List<Producto> listadoPorPrecioOrderByDescripcion(double precio) throws NegocioException;
+	public List<Producto> listadoPorPrecioOrderByDescripcion(double precio) throws NegocioException, NoEncontradoException;
 
 	public Producto agregar(Producto producto) throws NegocioException, EncontradoException, DuplicadoException;
 

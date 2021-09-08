@@ -2,6 +2,8 @@ package ar.edu.iua.iw3.web;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +26,7 @@ import ar.edu.iua.iw3.negocio.excepciones.NoEncontradoException;
 
 @RestController
 public class ProductosRestController {
-
+	private Logger log = LoggerFactory.getLogger(ProductosRestController.class);
 	@Autowired
 	private IProductoNegocio productoNegocio;
 
@@ -94,11 +96,13 @@ public class ProductosRestController {
 	public ResponseEntity<List<Producto>> listadoPorPrecioOrdenadoPorDescripcion(@RequestParam("precio") double precio) {
 		try {
 			return new ResponseEntity<List<Producto>>(productoNegocio.listadoPorPrecioOrderByDescripcion(precio), HttpStatus.OK);
-		} /*catch (NoEncontradoException e) {
+		} catch (NoEncontradoException ex) {
+			log.info("entre ******");
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("message", e.getMessage());
+			responseHeaders.set("message", ex.getMessage());
 			return new ResponseEntity<List<Producto>>(responseHeaders, HttpStatus.NOT_FOUND);
-		}*/ catch (NegocioException e) {
+			
+		} catch (NegocioException e) {
 			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

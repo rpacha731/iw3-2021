@@ -148,17 +148,20 @@ public class ProductoNegocio implements IProductoNegocio {
 
 	@Override
 	public List<Producto> listadoPorPrecioOrderByDescripcion(double precio)
-			throws NegocioException {
+			throws NegocioException, NoEncontradoException {
+		List<Producto> aux = null;
 		try {
-			List<Producto> aux = productoDAO.findByPrecioOrderByDescripcion(precio);
-			if (aux.isEmpty()) {
-				throw new NoEncontradoException("No hay productos con el precio = ");
-			}
-			return aux;
+			aux = productoDAO.findByPrecioOrderByDescripcion(precio);
+			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new NegocioException(e);
 		}
+		
+		if (aux.isEmpty()) {
+			throw new NoEncontradoException("No hay productos con el precio = " + precio);
+		}
+		return aux;
 	}
 
 	// @Bean
