@@ -124,9 +124,9 @@ public class ProductosRestController {
 
 	
 	@GetMapping(value="/productos/fechaVencimientoDespues")
-	public ResponseEntity<List<Producto>> listadoDespuesFechaVencimiento(@RequestParam("fechaVenci") Date fechaVenci) {
+	public ResponseEntity<List<Producto>> listadoDespuesFechaVencimiento(@RequestParam("fechaVenci") String fechaVenci) {
 		try {
-			return new ResponseEntity<List<Producto>>(productoNegocio.listadoDespuesFechaVencimiento(fechaVenci), HttpStatus.OK);
+			return new ResponseEntity<List<Producto>>(productoNegocio.listadoDespuesFechaVencimiento(Date.valueOf(fechaVenci)), HttpStatus.OK);
 		} catch (NoEncontradoException ex) {
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("message", ex.getMessage());
