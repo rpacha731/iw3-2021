@@ -28,6 +28,10 @@ public interface IProductoNegocio {
 	public List<Producto> listadoDespuesFechaVencimiento(Date fechaVenci) throws NegocioException, NoEncontradoException;
 	
 	public List<Producto> listadoPrimerosDosPorVencer() throws NegocioException, NoEncontradoException;
+	
+	public List<Producto> listadoSegunXProductoDetalle(String detalle) throws NegocioException, NoEncontradoException;
+	
+	public List<Producto> listadoSegunNombreProveedor (String nombreProveedor) throws NegocioException, NoEncontradoException;
 
 	public Producto agregar(Producto producto) throws NegocioException, EncontradoException, DuplicadoException;
 

@@ -217,6 +217,41 @@ public class ProductoNegocio implements IProductoNegocio {
 		return aux;
 	}
 
+	@Override
+	public List<Producto> listadoSegunXProductoDetalle(String detalle) throws NegocioException, NoEncontradoException {
+		List<Producto> aux = null;
+		try {
+			aux = productoDAO.findByProductoDetalleDetalle(detalle);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new NegocioException(e);
+		}
+		
+		if (aux.isEmpty()) {
+			throw new NoEncontradoException("No hay productos con el detalle = " + detalle);
+		}
+		return aux;
+	}
+
+	@Override
+	public List<Producto> listadoSegunNombreProveedor(String nombreProveedor)
+			throws NegocioException, NoEncontradoException {
+		List<Producto> aux = null;
+		try {
+			aux = productoDAO.findByProveedorNombre(nombreProveedor);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new NegocioException(e);
+		}
+		
+		if (aux.isEmpty()) {
+			throw new NoEncontradoException("No hay productos con el proveedor = " + nombreProveedor);
+		}
+		return aux;
+	}
+
 	// @Bean
 	// public IProductoNegocio getProductoNegocio() {
 	// return new ProductoNegocio();

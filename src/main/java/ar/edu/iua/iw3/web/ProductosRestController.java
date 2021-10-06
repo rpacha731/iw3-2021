@@ -172,6 +172,38 @@ public class ProductosRestController {
 		}
 	}
 	
+	
+	@GetMapping(value="/productos/productoDetalleDetalle")
+	public ResponseEntity<List<Producto>> listadoSegunXProductoDetalle(@RequestParam("detalle") String detalle) {
+		try {
+			return new ResponseEntity<List<Producto>>(productoNegocio.listadoSegunXProductoDetalle(detalle), HttpStatus.OK);
+		} catch (NoEncontradoException ex) {
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("message", ex.getMessage());
+			return new ResponseEntity<List<Producto>>(responseHeaders, HttpStatus.NOT_FOUND);
+			
+		} catch (NegocioException e) {
+			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	@GetMapping(value="/productos/nombreProveedor")
+	public ResponseEntity<List<Producto>> listadoSegunNombreProveedor(@RequestParam("nombreProveedor") String nombreProveedor) {
+		try {
+			return new ResponseEntity<List<Producto>>(productoNegocio.listadoSegunNombreProveedor(nombreProveedor), HttpStatus.OK);
+		} catch (NoEncontradoException ex) {
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("message", ex.getMessage());
+			return new ResponseEntity<List<Producto>>(responseHeaders, HttpStatus.NOT_FOUND);
+			
+		} catch (NegocioException e) {
+			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	
 	// curl -X PUT  http://localhost:8080/productos -H "Content-Type: application/json" -d '{"id":2,"descripcion":"Leche","enStock":false,"precio":55,"rubro":{"id":1,"rubro":"Alimentos"},"descripcionExtendida":"Se trata de leche larga vida"}' -v
 	@PutMapping(value="/productos")
 	public ResponseEntity<String> modificar(@RequestBody Producto producto) {
